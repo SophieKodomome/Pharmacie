@@ -31,5 +31,7 @@ namespace Medical
             ListIllness = il;
             Effectiveness = e;
         }
+        
+        public Med(){}
     }
 }

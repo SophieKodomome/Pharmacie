@@ -3,6 +3,7 @@ namespace Medical
 
     public abstract class Diagnose
     {
+        //parent class
         private int id;
         private string name;
 
