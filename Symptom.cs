@@ -1,6 +1,6 @@
 using connect;
 using System;
-//using Npgsql;
+using Npgsql;
 using System.Collections.Generic;
 
 namespace Medical
