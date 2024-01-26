@@ -8,9 +8,9 @@ namespace connect
     public class DBConnect
     {
 
-        public DBConnect(string host,string user,string password,string database)
+        public DBConnect()
         {
-            String connectionString = "Host="+host+";Username="+user+";Password="+password+";Database="+database;
+            String connectionString = "Host=localhost;Username=pharmacie;Password=pharmacie;Database=pharmacie";
 
             using var connection = new NpgsqlConnection(connectionString);
 
