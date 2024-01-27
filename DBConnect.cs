@@ -27,11 +27,11 @@ namespace connect
             {
                 connection.Open();
                 Test = "Connected to PostgreSQL!";
-                Console.WriteLine("Connected to PostgreSQL!");
+                //Console.WriteLine("Connected to PostgreSQL!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}" );
+                //Console.WriteLine($"Error: {ex.Message}" );
                 Test = $"Error: {ex.Message}";
             }
             finally

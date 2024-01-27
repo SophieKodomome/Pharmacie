@@ -22,17 +22,7 @@ public class IndexModel : PageModel
         connect = new DBConnect();
         using (var connection = new NpgsqlConnection(connect.ConnectionString))
         {
-            try{
-                connection.Open();
                 listSymptoms = new Symptom().getSymptomsFromDB(connection);
-            }
-            catch(Exception e){
-                Console.WriteLine($"Error: {e.Message}");
-            }
-            finally{
-                connection.Close();
-            }
-
         }
     }
 }

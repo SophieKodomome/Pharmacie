@@ -5,11 +5,25 @@
 }
 
 <div class="text-center">
-    @if(Model.connect!=null){
-        <h1 class="display-4">@Model.connect.Test</h1>
-    }
-    else{
-        <h1 class="display-4">Woopsies</h1>
-    }
-    
+    <div>
+        <h1 class="display-1">Pharmacie Rasalama</h1>
+        <h2 class="display-5">Marary aiza ianao</h2>
+    </div>
+    <div class="col">
+        <form method="post">
+        @if (Model.listSymptoms != null)
+        {
+            @foreach (var item in Model.listSymptoms)
+            {
+                <div>
+                    <label>@item.Name</label>
+                    <br>
+                    <input type="range" name="@item.Id" min="0" max="100" value="0" class="form-control-range" required />
+                </div>
+            }
+        }
+        <input type="submit" value="submit" />
+        </form>
+    </div>
+
 </div>
