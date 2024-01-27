@@ -10,15 +10,15 @@
         <h2 class="display-5">Marary aiza ianao</h2>
     </div>
     <div class="col">
-        <form method="post">
+        <form method="post" asp-page-handler="Traitement">
         @if (Model.listSymptoms != null)
         {
-            @foreach (var item in Model.listSymptoms)
+            @foreach (var symptom in Model.listSymptoms)
             {
                 <div>
-                    <label>@item.Name</label>
+                    <label>@symptom.Name</label>
                     <br>
-                    <input type="range" name="@item.Id" min="0" max="100" value="0" class="form-control-range" required />
+                    <input type="range" name="Symptom @symptom.Id" min="0" max="100" value="0" class="form-control-range" required />
                 </div>
             }
         }

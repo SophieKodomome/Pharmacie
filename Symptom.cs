@@ -59,5 +59,50 @@ namespace Medical
             connection.Close();
             return listSymptoms;
         }
+
+/*        public void createLog_Symptoms(NpgsqlConnection connection)
+        {
+
+            string query = "CREATE TABLE Log_symptoms(id_Symptom int,FOREIGN KEY (id_Symptom) References symptoms(id),severity integer check (severity<=100));";
+
+            try
+            {
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Table created successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error:{ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void insertSymptomtoLog(NpgsqlConnection connection)
+        {
+            string query = "INSERT INTO Log_symptoms VALUES (" + this.Id +","+ this.Severity+");";
+            try
+            {
+                using (var command = new NpgsqlCommand(query, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error:{ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }*/
     }
 }
