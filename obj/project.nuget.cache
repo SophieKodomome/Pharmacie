@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "96+LIiNoJp4O1IEYkbrsp7zPUtoHTePbvsdU43g3QRvVs1zc9hTDIndVYFQnvcMfg8r++z1scBnL3hS8R+wvbA==",
+  "dgSpecHash": "Y4v/8M//7926Ydx1133dfJbrcu0s4ptv/qkwdaNjtlripmm/YD4IowyFkuZH47xTQPT3zD7hCEU285OLowDsXQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Pyvas\\OneDrive\\Documents\\C-ITU-Files-L2\\ITU-S3-07-.NET\\Pharmacie\\Pharmacie.csproj",
   "expectedPackageFiles": [
@@ -28,6 +28,7 @@
     "C:\\Users\\Pyvas\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\Pyvas\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\Pyvas\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Pyvas\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Pyvas\\.nuget\\packages\\npgsql\\8.0.0\\npgsql.8.0.0.nupkg.sha512",
     "C:\\Users\\Pyvas\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\Pyvas\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",

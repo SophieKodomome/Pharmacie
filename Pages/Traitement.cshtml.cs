@@ -8,6 +8,7 @@ namespace Pharmacie.Pages;
 
 public class TraitementModel : PageModel
 {
+    public string concatSymptomValues {get;set;}
     public DBConnect connect;
     public List<Symptom> ListSymptoms { get; set; }
     private readonly ILogger<TraitementModel> _logger;
@@ -19,6 +20,7 @@ public class TraitementModel : PageModel
 
     public void OnGet()
     {
-
+        concatSymptomValues=TempData["severity"].ToString();
+        Console.WriteLine(concatSymptomValues);
     }
 }

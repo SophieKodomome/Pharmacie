@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Medical;
 using connect;
 using Npgsql;
+using System.Numerics;
 
 namespace Pharmacie.Pages;
 
@@ -11,9 +12,8 @@ public class IndexModel : PageModel
     public DBConnect connect;
     public List<Symptom> listSymptoms = new List<Symptom>();
 
-    //public List<Symptom> ListSymptoms{get;set;}
-    private readonly ILogger<IndexModel> _logger;
 
+    private readonly ILogger<IndexModel> _logger;
     public IndexModel(ILogger<IndexModel> logger)
     {
         _logger = logger;
@@ -30,15 +30,19 @@ public class IndexModel : PageModel
     }
 
     public IActionResult OnPost()
-    {   
-        
-        Console.WriteLine(listSymptoms.Count);
-        for(int i=0;i<listSymptoms.Count;i++){
-            int j=i+1;
-            double severity= double.Parse(Request.Form["Symptom"+j+"Value"])/100;
-            listSymptoms[i].Severity=severity;
-            Console.WriteLine("hi mom");
+    {
+        var symptomValues = Request.Form["severity"];
+        string[] stringSymptomValues = new string[symptomValues.Count];
+
+        for (int i = 0; i < stringSymptomValues.Count(); i++)
+        {
+            stringSymptomValues[i] = symptomValues[i];
         }
+        string separator = "-";
+        string concatSymptomValues = string.Join(separator, stringSymptomValues);
+
+        TempData["severity"] = concatSymptomValues;
+
         return RedirectToPage("/Traitement");
     }
 }
