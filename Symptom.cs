@@ -30,21 +30,23 @@ namespace Medical
             Severity=s;
         }
 
-        public Symptom[] getSymptomsFromDB(NpgsqlConnection connection){
+        public List<Symptom> getSymptomsFromDB(NpgsqlConnection connection){
             List<Symptom> listSymptoms=new List<Symptom>();
 
             using (var command= new NpgsqlCommand("SELECT * FROM Symptoms",connection))
-            {
+            {   int i=0;
                 using (var reader=command.ExecuteReader()){
                     while(reader.Read()){
                         Symptom s=new Symptom();
                         s.addId(reader.GetInt32(0)).addName(reader.GetString(1));
                         listSymptoms.Add(s);
+                        //Console.WriteLine(listSymptoms[i].Name);
+                        i++;
                     }
                 }
             }
 
-            return listSymptoms.ToArray();
+            return listSymptoms;
         }
     }
 }

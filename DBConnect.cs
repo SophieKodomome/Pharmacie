@@ -8,9 +8,10 @@ namespace connect
     public class DBConnect
     {
         private string test;
+        String connectionString;
 
         public string Test { get; set; }
-
+        public string ConnectionString {get;set;}
         public DBConnect()
         {
             Init_Connection();
@@ -18,9 +19,9 @@ namespace connect
 
         private void Init_Connection()
         {
-            String connectionString = "Host=localhost;Port=5432;Database=pharmacie;Username=pharmacie;Password=pharmacie;";
+            ConnectionString="Host=localhost;Port=5432;Database=pharmacie;Username=pharmacie;Password=pharmacie;";
 
-            using var connection = new NpgsqlConnection(connectionString);
+            using var connection = new NpgsqlConnection(ConnectionString);
 
             try
             {
@@ -30,7 +31,7 @@ namespace connect
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}" );
                 Test = $"Error: {ex.Message}";
             }
             finally
