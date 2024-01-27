@@ -2,12 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Medical;
 using connect;
+using Npgsql;
 
 namespace Pharmacie.Pages;
 
 public class IndexModel : PageModel
 {
-    public DBConnect connect{get;set;}
+    public DBConnect connect;
+    public List<Symptom> listSymptoms = new List<Symptom>();
     private readonly ILogger<IndexModel> _logger;
 
     public IndexModel(ILogger<IndexModel> logger)
@@ -18,6 +20,9 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         connect = new DBConnect();
-        Console.WriteLine(connect.Test + "from index View");
+        using (var connection = new NpgsqlConnection(connect.ConnectionString))
+        {
+                listSymptoms = new Symptom().getSymptomsFromDB(connection);
+        }
     }
 }
