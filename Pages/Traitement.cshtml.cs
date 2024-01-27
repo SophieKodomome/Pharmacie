@@ -20,7 +20,15 @@ public class TraitementModel : PageModel
 
     public void OnGet()
     {
-        concatSymptomValues=TempData["severity"].ToString();
+    if (TempData["severity"] != null)
+    {
+        concatSymptomValues = TempData["severity"].ToString();
         Console.WriteLine(concatSymptomValues);
+    }
+    else
+    {
+        // Handle the case where TempData["severity"] is null
+        Console.WriteLine("TempData['severity'] is null");
+    }
     }
 }
