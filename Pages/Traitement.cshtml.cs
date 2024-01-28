@@ -10,8 +10,8 @@ public class TraitementModel : PageModel
 {
     public DBConnect connect;
 
-    public List<Symptom> listSymptoms;
-    public List<Symptom> ListSymptoms { get; set; }
+    public List<Symptom> listSymptoms = new List<Symptom>();
+    public List<Symptom> ListSymptoms { get; set; } = new List<Symptom>();
     private readonly ILogger<TraitementModel> _logger;
 
     public TraitementModel(ILogger<TraitementModel> logger)
@@ -21,27 +21,37 @@ public class TraitementModel : PageModel
 
     public void OnGet()
     {
-    if (TempData["severity"] != null)
-    {
-        string concatSymptomName = TempData["symptom"].ToString();
-        string concatSymptomId = TempData["symptomId"].ToString();
-        string concatSymptomValues = TempData["severity"].ToString();
+        if (TempData["severity"] != null)
+        {
+            string concatSymptomName = TempData["symptom"].ToString();
+            string concatSymptomId = TempData["symptomId"].ToString();
+            string concatSymptomValues = TempData["severity"].ToString();
 
-        char[] delimiter = new char[] { '-' };
+            char[] delimiter = new char[] { '-' };
 
-        string[] symptomName=concatSymptomName.Split(delimiter);
-        int[] symptomId=Array.ConvertAll(concatSymptomId.Split(delimiter),int.Parse);
-        int[] symptomValues=Array.ConvertAll(concatSymptomValues.Split(delimiter),int.Parse);
+            string[] symptomName = concatSymptomName.Split(delimiter);
+            int[] symptomId = Array.ConvertAll(concatSymptomId.Split(delimiter), int.Parse);
+            int[] symptomValues = Array.ConvertAll(concatSymptomValues.Split(delimiter), int.Parse);
 
-        for(int i=0;i<symptomValues.Length;i++){
-            
+            ListSymptoms=ConstructListSymptom(symptomName,symptomId,symptomValues);
+
+        }
+        else
+        {
+            // Handle the case where TempData["severity"] is null
+            Console.WriteLine("TempData['severity'] is null");
+
         }
     }
-    else
-    {
-        // Handle the case where TempData["severity"] is null
-        Console.WriteLine("TempData['severity'] is null");
+    private List<Symptom> ConstructListSymptom(string[] n,int[] id,int[] s){
+            List<Symptom> ls=new List<Symptom>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                Symptom itemSymptoms = new Symptom();
+                itemSymptoms.addSeverity(s[i]).addName(n[i]).addId(id[i]);
+                ls.Add(itemSymptoms);
+            }
 
-    }
+            return ls;
     }
 }
