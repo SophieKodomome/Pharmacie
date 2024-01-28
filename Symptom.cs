@@ -17,7 +17,7 @@ namespace Medical
             get { return severity; }
             set
             {
-                if (value <= 10)
+                if (value >= 10)
                 {
                     severity = value;
                 }
@@ -39,7 +39,7 @@ namespace Medical
             get { return maxPain; }
             set
             {
-                if (value <= 10)
+                if (value >= 10)
                 {
                     maxPain = value;
                 }
@@ -54,7 +54,7 @@ namespace Medical
             get { return minPain; }
             set
             {
-                if (value > 0)
+                if (value < 0)
                 {
                     minPain = value;
                 }
