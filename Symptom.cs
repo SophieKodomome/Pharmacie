@@ -7,9 +7,9 @@ namespace Medical
 {
     public class Symptom : Diagnose
     {
-        private double severity;
+        private int severity;
 
-        public double Severity
+        public int Severity
         {
             get { return severity; }
             set
@@ -25,14 +25,14 @@ namespace Medical
             }
         }
 
-        public Symptom addSeverity(double s)
+        public Symptom addSeverity(int s)
         {
             Severity = s;
             return this;
         }
 
         public Symptom() { }
-        public Symptom(int i, string n, double s) : base(i, n)
+        public Symptom(int i, string n, int s) : base(i, n)
         {
             Severity = s;
         }
@@ -59,50 +59,5 @@ namespace Medical
             connection.Close();
             return listSymptoms;
         }
-
-/*        public void createLog_Symptoms(NpgsqlConnection connection)
-        {
-
-            string query = "CREATE TABLE Log_symptoms(id_Symptom int,FOREIGN KEY (id_Symptom) References symptoms(id),severity integer check (severity<=100));";
-
-            try
-            {
-                using (var command = new NpgsqlCommand(query, connection))
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    Console.WriteLine("Table created successfully.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error:{ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-
-        public void insertSymptomtoLog(NpgsqlConnection connection)
-        {
-            string query = "INSERT INTO Log_symptoms VALUES (" + this.Id +","+ this.Severity+");";
-            try
-            {
-                using (var command = new NpgsqlCommand(query, connection))
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error:{ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }*/
     }
 }
