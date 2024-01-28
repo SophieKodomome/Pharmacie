@@ -45,7 +45,6 @@ public class IndexModel : PageModel
         TempData["symptom"] = concatSymptomlabel;
         TempData["symptomId"] = concatSymptomId;
         TempData["severity"] = concatSymptomValues;
-
         return RedirectToPage("/Traitement");
     }
 }

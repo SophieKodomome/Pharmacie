@@ -2,6 +2,7 @@ using connect;
 using System;
 using Npgsql;
 using System.Collections.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace Medical
 {
@@ -12,58 +13,19 @@ namespace Medical
         private int minPain;
         private int severity;
 
-        public int Severity
-        {
-            get { return severity; }
-            set
-            {
-                if (value >= 10)
-                {
-                    severity = value;
-                }
-                else
-                {
-                    throw new Exception("illness's severity can't go higher than 10");
-                }
-            }
-        }
+        private bool isASymptom=false;
 
+        public int Severity{get;set;}
+        public bool IsASymptom{get;set;}
         public Symptom addSeverity(int s)
         {
             Severity = s;
             return this;
         }
 
-        public int MaxPain
-        {
-            get { return maxPain; }
-            set
-            {
-                if (value >= 10)
-                {
-                    maxPain = value;
-                }
-                else
-                {
-                    throw new Exception("max pain can't go higher than 10");
-                }
-            }
-        }
-        public int MinPain
-        {
-            get { return minPain; }
-            set
-            {
-                if (value < 0)
-                {
-                    minPain = value;
-                }
-                else
-                {
-                    throw new Exception("min pain can't go lower than 0");
-                }
-            }
-        }
+        public int MaxPain{get;set;}
+        public int MinPain{get;set;}
+
 
         public Symptom addMaxPain(int m)
         {
