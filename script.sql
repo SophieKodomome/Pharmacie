@@ -273,15 +273,4 @@ INSERT INTO efficiency VALUES(8,6,0);
 INSERT INTO efficiency VALUES(8,7,0);
 INSERT INTO efficiency VALUES(8,8,9);
 
-CREATE TABLE Log_symptoms(
-    id_Symptom int,
-    FOREIGN KEY (id_Symptom) References symptoms(id),
-    severity integer check (severity<=100)
-);
-
-INSERT INTO Log_symptoms VALUES(
-    1,
-    23
-);
-
-DROP TABLE Log_symptoms;
+SELECT id_illness

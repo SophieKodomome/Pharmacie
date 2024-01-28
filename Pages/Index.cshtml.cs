@@ -24,7 +24,7 @@ public class IndexModel : PageModel
         connect = new DBConnect();
         using (var connection = new NpgsqlConnection(connect.ConnectionString))
         {
-            listSymptoms = new Symptom().getSymptomsFromDB(connection);
+            listSymptoms = Symptom.getSymptomsFromDB(connection);
         }
         //ListSymptoms=listSymptoms;
     }
@@ -36,10 +36,6 @@ public class IndexModel : PageModel
         string[] arraySymptomId = Request.Form["symptomId"];
 
         //Console.WriteLine("size "+arraySymptomLabel.Length);
-        for (int i = 0; i < arraySymptomValues.Count(); i++)
-        {
-            Console.WriteLine(arraySymptomLabel[i]+" "+arraySymptomId[i]+" "+arraySymptomValues[i]);
-        }
         string separator = "-";
 
         string concatSymptomValues = string.Join(separator, arraySymptomValues);

@@ -7,9 +7,12 @@ namespace Medical
 {
     public class Symptom : Diagnose
     {
-        private double severity;
+        private int maxPain;
 
-        public double Severity
+        private int minPain;
+        private int severity;
+
+        public int Severity
         {
             get { return severity; }
             set
@@ -25,19 +28,62 @@ namespace Medical
             }
         }
 
-        public Symptom addSeverity(double s)
+        public Symptom addSeverity(int s)
         {
             Severity = s;
             return this;
         }
 
+        public int MaxPain
+        {
+            get { return maxPain; }
+            set
+            {
+                if (value <= 10)
+                {
+                    maxPain = value;
+                }
+                else
+                {
+                    throw new Exception("max pain can't go higher than 10");
+                }
+            }
+        }
+        public int MinPain
+        {
+            get { return minPain; }
+            set
+            {
+                if (value > 0)
+                {
+                    minPain = value;
+                }
+                else
+                {
+                    throw new Exception("min pain can't go lower than 0");
+                }
+            }
+        }
+
+        public Symptom addMaxPain(int m)
+        {
+            MaxPain = m;
+            return this;
+        }
+
+        public Symptom addMinPain(int m)
+        {
+            MinPain = m;
+            return this;
+        }
+
         public Symptom() { }
-        public Symptom(int i, string n, double s) : base(i, n)
+        public Symptom(int i, string n, int s) : base(i, n)
         {
             Severity = s;
         }
 
-        public List<Symptom> getSymptomsFromDB(NpgsqlConnection connection)
+        public static List<Symptom> getSymptomsFromDB(NpgsqlConnection connection)
         {
             List<Symptom> listSymptoms = new List<Symptom>();
 
@@ -60,49 +106,29 @@ namespace Medical
             return listSymptoms;
         }
 
-/*        public void createLog_Symptoms(NpgsqlConnection connection)
+        public static List<Symptom> getSymptomsForIllness(NpgsqlConnection connection,int id)
         {
-
-            string query = "CREATE TABLE Log_symptoms(id_Symptom int,FOREIGN KEY (id_Symptom) References symptoms(id),severity integer check (severity<=100));";
-
-            try
+            List<Symptom> listSymptoms = new List<Symptom>();
+            connection.Open();
+            using (var command = new NpgsqlCommand("SELECT * from v_diagnoses where id_illness="+id+";", connection))
             {
-                using (var command = new NpgsqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
                 {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    Console.WriteLine("Table created successfully.");
+                    while (reader.Read())
+                    {
+                        Symptom s = new Symptom();
+                        s
+                            .addMaxPain(reader.GetInt32(4))
+                            .addMinPain(reader.GetInt32(5))
+                            .addName(reader.GetString(2))
+                            .addId(reader.GetInt32(3));
+                        listSymptoms.Add(s);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error:{ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-            }
+
+            connection.Close();
+            return listSymptoms;
         }
-
-        public void insertSymptomtoLog(NpgsqlConnection connection)
-        {
-            string query = "INSERT INTO Log_symptoms VALUES (" + this.Id +","+ this.Severity+");";
-            try
-            {
-                using (var command = new NpgsqlCommand(query, connection))
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error:{ex.Message}");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }*/
     }
 }
