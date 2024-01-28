@@ -24,7 +24,7 @@ public class IndexModel : PageModel
         connect = new DBConnect();
         using (var connection = new NpgsqlConnection(connect.ConnectionString))
         {
-            listSymptoms = new Symptom().getSymptomsFromDB(connection);
+            listSymptoms = Symptom.getSymptomsFromDB(connection);
         }
         //ListSymptoms=listSymptoms;
     }

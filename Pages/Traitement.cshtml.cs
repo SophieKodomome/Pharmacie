@@ -8,10 +8,14 @@ namespace Pharmacie.Pages;
 
 public class TraitementModel : PageModel
 {
-    public DBConnect connect;
+    private DBConnect connect;
 
-    public List<Symptom> listSymptoms = new List<Symptom>();
-    public List<Symptom> ListSymptoms { get; set; } = new List<Symptom>();
+    private List<Symptom> listSymptoms = new List<Symptom>();
+    private List<Symptom> ListSymptoms { get; set; } = new List<Symptom>();
+    private List<Illness> listIllnesses = new List<Illness>();
+    private List<Illness> ListIllnesses {get;set;}=new List<Illness>();
+
+
     private readonly ILogger<TraitementModel> _logger;
 
     public TraitementModel(ILogger<TraitementModel> logger)
@@ -21,6 +25,16 @@ public class TraitementModel : PageModel
 
     public void OnGet()
     {
+        connect= new DBConnect();
+        using(var connection=new NpgsqlConnection(connect.ConnectionString))
+        {
+            ListIllnesses=Illness.GetIllnessesFromDB(connection);
+            for (int i = 0; i < ListIllnesses.Count; i++)
+            {
+                ListIllnesses[i].addListSymptoms(Symptom.getSymptomsForIllness(connection,i+1));
+            }
+        }
+
         if (TempData["severity"] != null)
         {
             string concatSymptomName = TempData["symptom"].ToString();
@@ -42,6 +56,8 @@ public class TraitementModel : PageModel
             Console.WriteLine("TempData['severity'] is null");
 
         }
+
+
     }
     private List<Symptom> ConstructListSymptom(string[] n,int[] id,int[] s){
             List<Symptom> ls=new List<Symptom>();

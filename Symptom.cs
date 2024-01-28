@@ -83,7 +83,7 @@ namespace Medical
             Severity = s;
         }
 
-        public List<Symptom> getSymptomsFromDB(NpgsqlConnection connection)
+        public static List<Symptom> getSymptomsFromDB(NpgsqlConnection connection)
         {
             List<Symptom> listSymptoms = new List<Symptom>();
 
@@ -106,12 +106,10 @@ namespace Medical
             return listSymptoms;
         }
 
-        public List<Symptom> getSymptomsForIllness(NpgsqlConnection connection,int id)
+        public static List<Symptom> getSymptomsForIllness(NpgsqlConnection connection,int id)
         {
             List<Symptom> listSymptoms = new List<Symptom>();
-
             connection.Open();
-
             using (var command = new NpgsqlCommand("SELECT * from v_diagnoses where id_illness="+id+";", connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -120,10 +118,10 @@ namespace Medical
                     {
                         Symptom s = new Symptom();
                         s
-                            .addMaxPain(reader.GetInt32(5))
-                            .addMinPain(reader.GetInt32(6))
+                            .addMaxPain(reader.GetInt32(4))
+                            .addMinPain(reader.GetInt32(5))
                             .addName(reader.GetString(2))
-                            .addId(reader.GetInt32(4));
+                            .addId(reader.GetInt32(3));
                         listSymptoms.Add(s);
                     }
                 }

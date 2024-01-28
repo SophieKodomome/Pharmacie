@@ -27,13 +27,11 @@ namespace Medical
 
         public Illness() { }
 
-        public List<Illness> GetIllnessesFromDB(NpgsqlConnection connection)
+        public static List<Illness> GetIllnessesFromDB(NpgsqlConnection connection)
         {
             //yes it is a bit long
             List<Illness> listIllness = new List<Illness>();
             //List<Symptom> listSymp=new List<Symptom>();
-            int i=0;
-
             connection.Open();
             using(var command=new NpgsqlCommand("select distinct nom_illness,id_illness from v_diagnoses order by id_illness;",connection))
             {
@@ -42,14 +40,13 @@ namespace Medical
                     while(reader.Read())
                     {
                         Illness ill=new Illness();
-                        ill.addListSymptoms(new Symptom().getSymptomsForIllness(connection,i))
-                            .addName(reader.GetString(0))
+                        ill.addName(reader.GetString(0))
                             .addId(reader.GetInt32(1));
-
-                        i++;
+                        listIllness.Add(ill);
                     }
                 }
             }
+            connection.Close();
             return listIllness;
         }
     }
