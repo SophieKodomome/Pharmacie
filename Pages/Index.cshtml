@@ -16,9 +16,11 @@
             @foreach (var symptom in Model.listSymptoms)
             {
                 <div>
-                    <label name="" >@symptom.Name</label>
+                    <label >@symptom.Name</label>
                     <br>
-                    <input type="range" name="severity" id="severity" min="0" max="100" value="0" class="form-control-range" required />
+                    <input type="range" name="severity" id="severity" min="0" max="10" value="0" class="form-control-range" required />
+                    <input type="hidden" name="symptom" value="@symptom.Name" />
+                    <input type="hidden" name="symptomId" value="@symptom.Id" />
                 </div>
             }
         }
