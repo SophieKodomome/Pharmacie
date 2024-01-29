@@ -25,6 +25,14 @@ public class TraitementModel : PageModel
 
     public Illness Illness { get; set; }
     public Med Med { get; set; }
+
+    public int prix;
+
+    public int total;
+    public int quantite;
+    public int Prix{get;set;}
+    public int Total{get;set;}
+    public int Quantite{get;set;}
     private readonly ILogger<TraitementModel> _logger;
 
     public TraitementModel(ILogger<TraitementModel> logger)
@@ -68,6 +76,9 @@ public class TraitementModel : PageModel
             using (var medConnection = new NpgsqlConnection(connect.ConnectionString))
             {
                     Med = new Med().getMedFromDB(medConnection, Illness.Id);
+                    Prix=Med.Prix;
+                    Quantite=Med.Quantite;
+                    Total=Prix*Quantite;
 
             }
 
