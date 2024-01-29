@@ -1,37 +1,52 @@
 using System.Collections.Generic;
+using Npgsql;
 
 namespace Medical
 {
     public class Med : Diagnose
     {
 
-        private List<Illness> listIllness;
+        private int idIllness;
         private int effectiveness;
 
-        public List<Illness> ListIllness { get; set; }
+        public int IdIllness { get; set; }
         public int Effectiveness { get; set; }
 
-        public Med addListIllness(List<Illness> il)
+        public Med addIdIllness(int i)
         {
-            ListIllness = il;
+            IdIllness = i;
             return this;
         }
 
-        public Med addEffectiveness(int e){
-            Effectiveness=e;
+        public Med addEfficiency(int e)
+        {
+            Effectiveness = e;
             return this;
         }
 
-        public Med(int i, string n, int e) : base(i, n)
+        public Med() { }
+
+        public Med getMedFromDB(NpgsqlConnection connection,int index)
         {
-            Effectiveness = e;
+            Med med = new Med();
+
+            connection.Open();
+            using (var command = new NpgsqlCommand("select meds,id_meds,id_illness,efficiency from v_meds where id_illness="+index+" order by efficiency desc limit 1;",connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        med
+                            .addIdIllness(reader.GetInt32(2))
+                            .addEfficiency(reader.GetInt32(3))
+                            .addName(reader.GetString(0))
+                            .addId(reader.GetInt32(1));
+                    }
+                }
+            }
+            connection.Close();
+            return med;
         }
-        public Med(int i, string n, List<Illness> il, int e) : base(i, n)
-        {
-            ListIllness = il;
-            Effectiveness = e;
-        }
-        
-        public Med(){}
     }
 }

@@ -186,47 +186,33 @@ INSERT INTO meds(nom) VALUES('just sleep lol');
 INSERT INTO meds(nom) VALUES('just drink lol');
 INSERT INTO meds(nom) VALUES('cetirizine');
 
-CREATE TABLE pseudoephedrine(
-    id_illness int,
-    FOREIGN KEY (id_illness) References illnesses(id)
-    efficiency int
-);
-INSERT INTO pseudoephedrine VALUES(1,8);
-INSERT INTO pseudoephedrine VALUES(2,6);
-INSERT INTO pseudoephedrine VALUES(3,3);
-INSERT INTO pseudoephedrine VALUES(4,0);
-INSERT INTO pseudoephedrine VALUES(5,2);
-INSERT INTO pseudoephedrine VALUES(6,0);
-INSERT INTO pseudoephedrine VALUES(7,0);
-INSERT INTO pseudoephedrine VALUES(8,1);
+INSERT INTO efficiency VALUES(1,1,8);
+INSERT INTO efficiency VALUES(1,2,6);
+INSERT INTO efficiency VALUES(1,3,3);
+INSERT INTO efficiency VALUES(1,4,0);
+INSERT INTO efficiency VALUES(1,5,2);
+INSERT INTO efficiency VALUES(1,6,0);
+INSERT INTO efficiency VALUES(1,7,0);
+INSERT INTO efficiency VALUES(1,8,1);
 
-CREATE TABLE tamiflu(
-    id_illness int,
-    FOREIGN KEY (id_illness) References illnesses(id)
-    efficiency int
-);
-INSERT INTO tamiflu VALUES(1,3);
-INSERT INTO tamiflu VALUES(2,8);
-INSERT INTO tamiflu VALUES(3,2);
-INSERT INTO tamiflu VALUES(4,0);
-INSERT INTO tamiflu VALUES(5,0);
-INSERT INTO tamiflu VALUES(6,0);
-INSERT INTO tamiflu VALUES(7,0);
-INSERT INTO tamiflu VALUES(8,0);
 
-CREATE TABLE amoxicillin(
-    id_illness int,
-    FOREIGN KEY (id_illness) References illnesses(id)
-    efficiency int
-);
-INSERT INTO amoxicillin VALUES(3,1,1);
-INSERT INTO amoxicillin VALUES(3,2,2);
-INSERT INTO amoxicillin VALUES(3,3,9);
-INSERT INTO amoxicillin VALUES(3,4,0);
-INSERT INTO amoxicillin VALUES(3,5,0);
-INSERT INTO amoxicillin VALUES(3,6,0);
-INSERT INTO amoxicillin VALUES(3,7,0);
-INSERT INTO amoxicillin VALUES(3,8,0);
+INSERT INTO efficiency VALUES(2,1,3);
+INSERT INTO efficiency VALUES(2,2,8);
+INSERT INTO efficiency VALUES(2,3,2);
+INSERT INTO efficiency VALUES(2,4,0);
+INSERT INTO efficiency VALUES(2,5,0);
+INSERT INTO efficiency VALUES(2,6,0);
+INSERT INTO efficiency VALUES(2,7,0);
+INSERT INTO efficiency VALUES(2,8,0);
+
+INSERT INTO efficiency VALUES(3,1,1);
+INSERT INTO efficiency VALUES(3,2,2);
+INSERT INTO efficiency VALUES(3,3,9);
+INSERT INTO efficiency VALUES(3,4,0);
+INSERT INTO efficiency VALUES(3,5,0);
+INSERT INTO efficiency VALUES(3,6,0);
+INSERT INTO efficiency VALUES(3,7,0);
+INSERT INTO efficiency VALUES(3,8,0);
 
 INSERT INTO efficiency VALUES(4,1,0);
 INSERT INTO efficiency VALUES(4,2,0);
@@ -273,4 +259,51 @@ INSERT INTO efficiency VALUES(8,6,0);
 INSERT INTO efficiency VALUES(8,7,0);
 INSERT INTO efficiency VALUES(8,8,9);
 
-SELECT id_illness
+create view v_diagnoses as
+select 
+  illnesses.nom as nom_illness, 
+  id_illness, 
+  symptoms.nom as nom_symptom, 
+  id_symptom, 
+  max_pain, 
+  min_pain 
+from 
+  diagnoses 
+  join illnesses on illnesses.id = diagnoses.id_illness 
+  join symptoms on symptoms.id = diagnoses.id_symptom;
+
+select 
+  id_illness 
+from 
+  v_diagnoses 
+group by 
+  id_illness 
+order by 
+  id_illness;
+
+select 
+  distinct nom_illness, 
+  id_illness 
+from 
+  v_diagnoses 
+order by 
+  id_illness
+
+select * from v_diagnoses where nom_symptom='sorethroat' or nom_symptom='coughing' or nom_symptom='snot' or nom_symptom='fatigue';
+
+select *
+from v_diagnoses;
+
+SELECT *
+FROM v_diagnoses WHERE id_symptom='2' AND 5>=min_pain AND 5<=max_pain
+ORDER BY ABS(max_pain - 5)
+LIMIT 1;
+
+SELECT *
+FROM v_diagnoses WHERE id_symptom='1' AND 2>=min_pain AND 2<=max_pain
+ORDER BY ABS(max_pain - 2)
+LIMIT 1;
+
+select * FROM(select * from v_diagnoses where id_symptom=2 or id_symptom=1) as new where 5>=min_pain AND 5<=max_pain;
+
+select meds,id_meds,id_illness,efficiency from v_meds where id_illness=7 order by efficiency desc limit 1;
